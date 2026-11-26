@@ -38,6 +38,8 @@ Pins come back automatically when you open the same page again and turn PinPoint
 
 **Other ways to open the comment list:** right-click the PinPoint icon and choose **Options**, or click the icon on a page where extensions can't run (like the New Tab page).
 
+If **Alt+Shift+P** does nothing, open `chrome://extensions/shortcuts` and assign that shortcut to PinPoint. Chrome sometimes leaves the suggested shortcut unassigned until you set it.
+
 ### Free plan limits
 
 - 1 project (projects are keyed by site domain, e.g. `client.com`)
@@ -128,13 +130,21 @@ Payments are **not** wired up. Everything goes through `lib/license.js`, so this
 
 ## 5. Publishing to the Chrome Web Store
 
-1. Replace the placeholder icons in `icons/` with your final artwork (same sizes: 16, 48, 128 px).
-2. Put your support email in `pages/privacy.html`.
-3. **Host the privacy policy publicly.** The Web Store needs a URL. The simplest option is to paste `pages/privacy.html` into a free GitHub Pages site or a page on your portfolio site.
-4. Zip the **contents** of the folder, so `manifest.json` sits at the top level of the zip. Leave out `README.md` and `STORE_LISTING.md` if you like.
-5. Go to the [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole) (one-time $5 registration fee), click **New item**, and upload the zip.
-6. Copy the text from `STORE_LISTING.md` into the listing. Add 1–5 screenshots (1280×800).
-7. In the **Privacy** tab, explain each permission (reasons are in `pages/privacy.html`). Declare that you don't collect user data and that you use no remote code.
+Before you submit, you will need:
+
+1. A **support email** in `pages/privacy.html` (replace `[ADD YOUR SUPPORT EMAIL BEFORE PUBLISHING]`).
+2. A **public privacy policy URL**. The Web Store will not accept the file inside the extension. Host `pages/privacy.html` on GitHub Pages or any site you control, then paste that URL into the listing.
+3. The one-time **$5 USD** Chrome Web Store developer registration fee (paid in the developer dashboard with a Google account).
+4. At least one **screenshot**, 1280×800 or 640×400 pixels (up to 5). A small **promo tile** of 440×280 is optional but recommended — a starter is in `store-assets/promo-440x280.png`. The 16/48/128 icons are already in `icons/`.
+5. A zip of the extension with `manifest.json` at the top level. Leave out `.git`, `README.md` and `STORE_LISTING.md`.
+
+Then:
+
+1. Go to the [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole), click **New item**, and upload the zip.
+2. Copy the text from `STORE_LISTING.md` into the listing, including the single-purpose statement and permission justifications on the **Privacy** tab.
+3. Declare that you don't collect user data and that you use no remote code. Paste the public privacy policy URL.
+
+> After you change any file, go back to `chrome://extensions`, click the circular reload arrow on the PinPoint card, and refresh the website tab you're testing on.
 
 > Note about jsPDF: the original library has one link to a CDN script, used only by a "view in browser" mode this extension never calls. That URL was removed from the bundled copy so the package contains no remote code references.
 

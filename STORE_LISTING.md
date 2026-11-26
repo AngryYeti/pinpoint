@@ -55,3 +55,17 @@ PinPoint Feedback lets a user place comments on elements of the web page in the 
 **Remote code:** No. All code, including the PDF library, is packaged in the extension.
 
 **Data usage:** The extension does not collect or transmit any user data.
+
+---
+
+## What you need to submit
+
+- One-time **$5 USD** Chrome Web Store developer registration.
+- This listing copy (short description, detailed description, single-purpose statement, permission justifications above).
+- A **public URL** for the privacy policy (`pages/privacy.html` hosted on a website — not only inside the zip).
+- Your **support email**, added to `pages/privacy.html` before you host it.
+- At least one screenshot: **1280×800** or **640×400**.
+- Optional: small promo tile **440×280**. A starter tile is in `store-assets/promo-440x280.png`.
+- The 128×128 icon is already packaged in the extension.
+
+**Privacy tab declarations:** no user data is collected or transmitted; no remote code is used; all code including the PDF library is packaged in the extension.
