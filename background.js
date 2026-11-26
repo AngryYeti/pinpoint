@@ -20,11 +20,28 @@ license.startLicenseBackground();
 // ---------------------------------------------------------------------------
 
 chrome.action.onClicked.addListener((tab) => {
-  toggleCommentMode(tab);
+  toggleCommentMode(tab).catch((err) => {
+    console.info('PinPoint: toggle failed:', err?.message);
+  });
 });
 
+async function injectOverlay(tabId) {
+  // Drop leftover hosts / flags from an orphaned script (for example after an extension reload).
+  await chrome.scripting.executeScript({
+    target: { tabId },
+    func: () => {
+      window.__pinpointFeedback = false;
+      document.querySelectorAll('pinpoint-feedback').forEach((el) => el.remove());
+    },
+  });
+  await chrome.scripting.executeScript({ target: { tabId }, files: [CONTENT_SCRIPT] });
+}
+
 async function toggleCommentMode(tab) {
-  if (!tab?.id) return;
+  if (!tab?.id) {
+    await openDashboard();
+    return;
+  }
   try {
     // Is the overlay already running in this tab?
     const [probe] = await chrome.scripting.executeScript({
@@ -32,10 +49,15 @@ async function toggleCommentMode(tab) {
       func: () => Boolean(window.__pinpointFeedback),
     });
     if (probe?.result) {
-      await chrome.tabs.sendMessage(tab.id, { type: 'pp:exit' });
-    } else {
-      await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: [CONTENT_SCRIPT] });
+      try {
+        await chrome.tabs.sendMessage(tab.id, { type: 'pp:exit' });
+        return;
+      } catch (err) {
+        // Flag was set but no listener is left (orphaned after a reload). Turn it back on.
+        console.info('PinPoint: overlay was stale, turning it back on:', err?.message);
+      }
     }
+    await injectOverlay(tab.id);
   } catch (err) {
     // Chrome blocks extensions on chrome:// pages, the Web Store, the New Tab page, PDFs, etc.
     // Open the comment list instead so the click still does something useful.
@@ -99,8 +121,19 @@ function cropWindow(lo, hi, min, max, click, limit) {
   return { start, size };
 }
 
+async function captureVisibleTabWithRetry(windowId) {
+  try {
+    return await chrome.tabs.captureVisibleTab(windowId, { format: 'png' });
+  } catch (err) {
+    const message = String(err?.message || err);
+    if (!/MAX_CAPTURE|quota|rate/i.test(message)) throw err;
+    await new Promise((r) => setTimeout(r, 700));
+    return await chrome.tabs.captureVisibleTab(windowId, { format: 'png' });
+  }
+}
+
 async function captureAndCrop(tab, { rect, click, viewport, number }) {
-  const dataUrl = await chrome.tabs.captureVisibleTab(tab.windowId, { format: 'png' });
+  const dataUrl = await captureVisibleTabWithRetry(tab.windowId);
   const bitmap = await createImageBitmap(await (await fetch(dataUrl)).blob());
 
   // Screenshot pixels per CSS pixel (handles retina screens and browser zoom).
@@ -345,7 +378,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     .then(() => handler(msg, sender))
     .then(sendResponse, (err) => {
       console.error('PinPoint:', msg.type, err);
-      sendResponse({ ok: false, error: String(err?.message || err) });
+      sendResponse({ ok: false, error: friendlyStorageError(err) });
     });
   return true; // keep the channel open for the async response
 });
+
+function friendlyStorageError(err) {
+  const message = String(err?.message || err);
+  if (/quota/i.test(message)) {
+    return 'PinPoint is out of storage space. Delete some comments or a project, then try again.';
+  }
+  return message;
+}

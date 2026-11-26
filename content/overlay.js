@@ -7,7 +7,8 @@
   'use strict';
 
   if (window.__pinpointFeedback) return;
-  window.__pinpointFeedback = true;
+  const instance = {};
+  window.__pinpointFeedback = instance;
 
   // -------------------------------------------------------------------------
   // State
@@ -893,7 +894,8 @@
       /* extension context already gone */
     }
     host.remove();
-    window.__pinpointFeedback = false;
+    // Only clear the flag if this instance still owns it (a newer inject may have started).
+    if (window.__pinpointFeedback === instance) window.__pinpointFeedback = false;
     if (!silent) send('pp:modeChanged', { on: false });
   }
 

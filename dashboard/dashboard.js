@@ -318,9 +318,14 @@ $('exportPdf').addEventListener('click', async (e) => {
 $('exportCsv').addEventListener('click', async () => {
   const { project, comments } = exportContext();
   if (!comments.length) return toast('Nothing to export with this filter.');
-  const blob = new Blob([toCSV(project, comments)], { type: 'text/csv;charset=utf-8' });
-  await download(blob, `${fileBaseName(project)}.csv`);
-  toast('CSV saved to your Downloads');
+  try {
+    const blob = new Blob([toCSV(project, comments)], { type: 'text/csv;charset=utf-8' });
+    await download(blob, `${fileBaseName(project)}.csv`);
+    toast('CSV saved to your Downloads');
+  } catch (err) {
+    console.error(err);
+    toast('Sorry, the CSV could not be saved.');
+  }
 });
 
 $('copyText').addEventListener('click', async () => {

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "PinPoint Feedback",
   "short_name": "PinPoint",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Click anywhere on a website, pin a comment, export a PDF punch list. No account. Nothing leaves your device.",
   "minimum_chrome_version": "116",
   "permissions": ["activeTab", "scripting", "storage", "downloads"],
