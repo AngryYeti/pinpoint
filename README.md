@@ -132,7 +132,7 @@ Payments are **not** wired up. Everything goes through `lib/license.js`, so this
 
 Before you submit, you will need:
 
-1. A **support email** in `pages/privacy.html` (replace `hello@yetimedia.pro`).
+1. A **support email** in `pages/privacy.html` (set to `hello@yetimedia.pro`).
 2. A **public privacy policy URL**. The Web Store will not accept the file inside the extension. Host `pages/privacy.html` on GitHub Pages or any site you control, then paste that URL into the listing.
 3. The one-time **$5 USD** Chrome Web Store developer registration fee (paid in the developer dashboard with a Google account).
 4. At least one **screenshot**, 1280×800 or 640×400 pixels (up to 5). A small **promo tile** of 440×280 is optional but recommended — a starter is in `store-assets/promo-440x280.png`. The 16/48/128 icons are already in `icons/`.
