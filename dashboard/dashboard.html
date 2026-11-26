@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PinPoint Feedback: Comments</title>
+  <link rel="icon" href="../icons/icon16.png">
+  <link rel="stylesheet" href="dashboard.css">
+  <!-- jsPDF is bundled with the extension. No remote code is loaded. -->
+  <script src="../lib/jspdf.umd.min.js" defer></script>
+  <script src="dashboard.js" type="module"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to comments</a>
+
+  <header class="top">
+    <div class="brand">
+      <img src="../icons/icon48.png" alt="" width="28" height="28">
+      <span>PinPoint Feedback</span>
+    </div>
+    <label class="project-picker" id="projectPickerWrap" hidden>
+      <span class="sr">Project</span>
+      <select id="projectSelect"></select>
+    </label>
+  </header>
+
+  <div id="notice" class="notice" role="status" hidden></div>
+
+  <main id="main" tabindex="-1">
+    <section id="empty" class="empty" hidden>
+      <img src="../icons/icon128.png" alt="" width="64" height="64">
+      <h1>No comments yet</h1>
+      <ol>
+        <li>Open the website you want to give feedback on.</li>
+        <li>Click the <strong>PinPoint</strong> icon in the toolbar (or press <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>).</li>
+        <li>Click anything on the page and type your note.</li>
+      </ol>
+      <p class="muted">Tip: pin the extension (puzzle-piece icon → pin) so it's always one click away.</p>
+    </section>
+
+    <section id="project" hidden aria-labelledby="projectNameLabel">
+      <div class="project-head">
+        <label id="projectNameLabel" for="projectName">Project name</label>
+        <input id="projectName" type="text" maxlength="120" autocomplete="off">
+        <p class="muted" id="projectMeta"></p>
+      </div>
+
+      <div class="actions" role="group" aria-label="Export">
+        <button type="button" class="btn primary" id="exportPdf">Export PDF</button>
+        <button type="button" class="btn" id="exportCsv">Export CSV</button>
+        <button type="button" class="btn" id="copyText">Copy as text</button>
+      </div>
+
+      <div class="filters" role="radiogroup" aria-label="Show">
+        <label><input type="radio" name="filter" value="all" checked><span>All</span></label>
+        <label><input type="radio" name="filter" value="open"><span>Open</span></label>
+        <label><input type="radio" name="filter" value="done"><span>Done</span></label>
+      </div>
+
+      <div id="pages"></div>
+
+      <div class="danger-zone">
+        <button type="button" class="link danger" id="deleteProject">Delete this project and all its comments</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <div class="usage" id="usage"></div>
+    <nav class="links">
+      <a href="../pages/privacy.html" target="_blank" rel="noopener">Privacy</a>
+    </nav>
+  </footer>
+
+  <dialog id="lightbox" aria-labelledby="lightboxTitle">
+    <div class="lightbox-head">
+      <h2 id="lightboxTitle">Screenshot</h2>
+      <button type="button" class="btn" id="lightboxClose">Close</button>
+    </div>
+    <img id="lightboxImg" alt="">
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

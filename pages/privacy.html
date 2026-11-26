@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PinPoint Feedback: Privacy Policy</title>
+  <link rel="stylesheet" href="page.css">
+</head>
+<body>
+  <main>
+    <div class="brand"><img src="../icons/icon48.png" alt="" width="32" height="32"> PinPoint Feedback</div>
+    <h1>Privacy Policy</h1>
+    <p>Last updated: November 26, 2026</p>
+
+    <div class="card">
+      <p><strong>Short version: nothing leaves your device.</strong> PinPoint Feedback has no account, no server, no analytics and no tracking. Your comments and screenshots are stored only in your own browser, and only you decide when to export or share them.</p>
+    </div>
+
+    <h2>What the extension stores</h2>
+    <p>When you leave a comment, PinPoint saves the following in your browser's local extension storage (<code>chrome.storage.local</code>) on your computer:</p>
+    <ul>
+      <li>The page address (URL) and page title</li>
+      <li>A technical description of the element you clicked (a CSS selector) and the pin position</li>
+      <li>Your note, its priority and its status (open/done), with timestamps</li>
+      <li>A small cropped screenshot of the area around the element you clicked</li>
+      <li>The project name you choose for each website</li>
+    </ul>
+
+    <h2>What the extension does NOT do</h2>
+    <ul>
+      <li>It does not send any data to the developer or any third party.</li>
+      <li>It does not use analytics, cookies, advertising or tracking of any kind.</li>
+      <li>It does not read pages in the background. It only runs on a tab after you click its toolbar icon (or press its keyboard shortcut), and only on that tab.</li>
+      <li>It does not load remote code. All code, including the PDF library, is packaged inside the extension.</li>
+      <li>It does not sell, rent or share your data.</li>
+    </ul>
+
+    <h2>Permissions and why they're needed</h2>
+    <table>
+      <thead><tr><th>Permission</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><code>activeTab</code></td><td>Lets PinPoint work on the current tab only, and only after you click its icon. It also allows the screenshot of that tab.</td></tr>
+        <tr><td><code>scripting</code></td><td>Adds the commenting overlay (pins, note box) to the tab you clicked the icon on.</td></tr>
+        <tr><td><code>storage</code></td><td>Saves your comments and screenshots locally in your browser.</td></tr>
+        <tr><td><code>downloads</code></td><td>Saves the PDF and CSV exports to your computer.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Sharing and exports</h2>
+    <p>Exports (PDF, CSV, copied text) are created on your device. They are only shared if you choose to send them to someone yourself.</p>
+
+    <h2>Deleting your data</h2>
+    <p>You can delete individual comments or whole projects from the comment list. Removing the extension from Chrome deletes all of its stored data.</p>
+
+    <h2>Future paid plan</h2>
+    <p>If a paid plan is added later, payment would be handled by a payment provider (such as ExtensionPay / Stripe) on their own website. Your comments and screenshots would still stay on your device. This policy will be updated before any such change.</p>
+
+    <h2>Contact</h2>
+    <p>Questions? Contact the developer at <strong>[your support email]</strong>.</p>
+  </main>
+</body>
+</html>
